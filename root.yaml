@@ -1,7 +1,17 @@
 AWSTemplateFormatVersion: "2010-09-09"
+Parameters: 
+  CidrBlock: 
+    Default: "10.0.0.0/16"
+  EnableDnsSupport:
+    Default: "false"
+  EnableDnsHostnames:
+    Default: "false"
+  InstanceTenacy:
+    Default: "dedicated"
+
 Resources:
   myVPC:
   Type: "AWS::CloudFormation::Stack"
   Properties: 
     TimeoutInMinutes: 60
-    TemplateURL: 
+    TemplateURL: "https://github.com/Quirio/TFM_Unir_2017/blob/master/vpc.yaml"

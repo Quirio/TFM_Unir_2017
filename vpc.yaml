@@ -1,0 +1,12 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  myVPC:
+  Type: AWS::EC2::VPC
+  Properties:
+    CidrBlock: { Ref: "Cidrblock" }
+    EnableDnsSupport: { Ref: "EnabledDnsSupport" } 
+    EnableDnsHostnames: { Ref: "EnabledDnsHostnames" }
+    InstanceTenancy: { Ref: "InstanceTenacy"  }
+    Tags:
+      - Key: Name
+      Value: vpc

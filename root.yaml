@@ -14,4 +14,4 @@ Resources:
   Type: "AWS::CloudFormation::Stack"
   Properties: 
     TimeoutInMinutes: 60
-    TemplateURL: "https://github.com/Quirio/TFM_Unir_2017/blob/master/vpc.yaml"
+    TemplateURL: "https://s3-eu-west-1.amazonaws.com/cloudformationtfm/vpc.yaml"

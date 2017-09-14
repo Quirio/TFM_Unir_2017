@@ -1,12 +1,29 @@
 AWSTemplateFormatVersion: '2010-09-09'
+Parameters: 
+  CidrBlock:
+    Type: String 
+    Default: "10.0.0.0/16"
+  EnableDnsSupport:
+    Type: String
+    Default: "false"
+  EnableDnsHostnames:
+    Type: String
+    Default: "false"
+  InstanceTenacy:
+    Type: String
+    Default: "dedicated"
 Resources:
   myVPC:
-  Type: AWS::EC2::VPC
-  Properties:
-    CidrBlock: { Ref: "Cidrblock" }
-    EnableDnsSupport: { Ref: "EnabledDnsSupport" } 
-    EnableDnsHostnames: { Ref: "EnabledDnsHostnames" }
-    InstanceTenancy: { Ref: "InstanceTenacy"  }
-    Tags:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 
+        Ref: "CidrBlock"
+      EnableDnsSupport: 
+        Ref: "EnableDnsSupport" 
+      EnableDnsHostnames: 
+        Ref: "EnableDnsHostnames" 
+      InstanceTenancy: 
+        Ref: "InstanceTenacy"
+      Tags:
       - Key: Name
-      Value: vpc
+        Value: vpc

@@ -5,3 +5,8 @@ Resources:
     Properties: 
       TimeoutInMinutes: 60
       TemplateURL: "https://s3-eu-west-1.amazonaws.com/cloudformationtfm/vpc.yaml"
+      Parameters:
+        CidrBlock: "10.0.0.0/16"
+        EnableDnsSupport: "false"
+        EnableDnsHostnames: "false"
+        InstanceTenacy: "dedicated"

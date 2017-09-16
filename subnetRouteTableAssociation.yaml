@@ -4,7 +4,7 @@ Parameters:
   RouteTableId:
     Type: String
 Resources:
-  Table_Association:
+  TableAssociation:
     Type: "AWS::EC2::SubnetRouteTableAssociation"
     Properties:
       RouteTableId: !Ref RouteTableId

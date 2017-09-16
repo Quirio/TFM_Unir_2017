@@ -1,0 +1,14 @@
+Parameters:
+  AllocationId: 
+    Type: String
+  SubnetId: 
+    Type: String
+Resources:
+  NatGateway:
+    Type: "AWS::EC2::NatGateway"
+    Properties: 
+      AllocationId: !Ref AllocationId
+      SubnetId: !Ref SubnetId
+Outputs:
+  NatGateway:
+    Value: !Ref NatGateway

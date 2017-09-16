@@ -33,6 +33,16 @@ Resources:
         NameTag: "Public_Route_table"
         DestinationCidrBlock: "0.0.0.0/0"
         GatewayId: !GetAtt intGateway.Outputs.intGateway
+
+  publicTableAssoc:
+    Type: "AWS::CloudFormation::Stack"
+    DependsOn: ["myPublicRouteTable", "myPublicSubnet"]
+    Properties:
+      TimeoutInMinutes: 60
+      TemplateURL: "https://s3-eu-west-1.amazonaws.com/cloudformationtfm/subnetRouteTableAssociation.yaml"
+      Parameters:
+        SubnetId: !GetAtt myPublicSubnet.Outputs.SubnetId
+        RouteTableId: !GetAtt myPublicRouteTable.Outputs.RouteTable
   
   intGateway:
     Type: "AWS::CloudFormation::Stack"
@@ -54,3 +64,45 @@ Resources:
         CidrBlock: "10.0.1.0/24"      
         NameTag: "SubnetPrivada"
         VpcId: !GetAtt myVPC.Outputs.VPCid 
+  
+  elasticIp:
+    Type: "AWS::CloudFormation::Stack"
+    DependsOn: "myVPC"
+    Properties:
+      TimeoutInMinutes: 60
+      TemplateURL: "https://s3-eu-west-1.amazonaws.com/cloudformationtfm/elasticIp.yaml"
+      Parameters:
+        VpcId: !GetAtt myVPC.Outputs.VPCid
+  
+  natGateway:
+    Type: "AWS::CloudFormation::Stack"
+    DependsOn: ["elasticIp", "myPrivateSubnet"]
+    Properties:
+      TimeoutInMinutes: 60
+      TemplateURL: "https://s3-eu-west-1.amazonaws.com/cloudformationtfm/natGateway.yaml"
+      Parameters:
+        AllocationId: !GetAtt elasticIp.Outputs.elasticIp
+        SubnetId: !GetAtt myPrivateSubnet.Outputs.SubnetId
+ 
+  privateTableAssoc:  
+    Type: "AWS::CloudFormation::Stack"
+    DependsOn: ["myPrivateRouteTable", "myPrivateSubnet"]
+    Properties:
+      TimeoutInMinutes: 60
+      TemplateURL: "https://s3-eu-west-1.amazonaws.com/cloudformationtfm/subnetRouteTableAssociation.yaml"
+      Parameters:
+        SubnetId: !GetAtt myPrivateSubnet.Outputs.SubnetId
+        RouteTableId: !GetAtt myPrivateRouteTable.Outputs.RouteTable
+  
+  myPrivateRouteTable:     
+    Type: "AWS::CloudFormation::Stack"
+    DependsOn: ["myVPC", "natGateway"]
+    Properties:
+      TimeoutInMinutes: 60
+      TemplateURL: "https://s3-eu-west-1.amazonaws.com/cloudformationtfm/routeTableprivate.yaml"
+      Parameters:
+        VpcId: !GetAtt myVPC.Outputs.VPCid
+        NameTag: "Private_Route_table"
+        DestinationCidrBlock: "0.0.0.0/0"
+        NatGatewayId: !GetAtt natGateway.Outputs.NatGateway
+

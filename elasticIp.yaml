@@ -1,0 +1,11 @@
+Parameters:
+  VpcId:
+    Type: String
+Resources:
+  elasticIp:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: !Ref VpcId
+Outputs:
+  elasticIp:
+    Value: !GetAtt elasticIp.AllocationId

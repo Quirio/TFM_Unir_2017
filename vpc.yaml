@@ -11,19 +11,19 @@ Parameters:
     Default: "false"
   InstanceTenacy:
     Type: String
-    Default: "dedicated"
 Resources:
   myVPC:
     Type: AWS::EC2::VPC
     Properties:
-      CidrBlock: 
-        Ref: "CidrBlock"
-      EnableDnsSupport: 
-        Ref: "EnableDnsSupport" 
-      EnableDnsHostnames: 
-        Ref: "EnableDnsHostnames" 
-      InstanceTenancy: 
-        Ref: "InstanceTenacy"
+      CidrBlock: !Ref CidrBlock
+      EnableDnsSupport: !Ref EnableDnsSupport 
+      EnableDnsHostnames: !Ref EnableDnsHostnames 
+      InstanceTenancy: !Ref InstanceTenacy
       Tags:
       - Key: Name
         Value: vpc
+Outputs:
+  VPCid:
+    Value: !Ref myVPC
+    Export:
+      Name: !Sub "VPCID"

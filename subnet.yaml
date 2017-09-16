@@ -1,0 +1,16 @@
+Parameters:
+  VpcId:
+    Type: String
+  CidrBlock:
+    Type: String
+  NameTag:
+    Type: String 
+Resources:
+  Subnet:
+    Type: "AWS::EC2::Subnet" 
+    Properties:
+      CidrBlock: !Ref CidrBlock
+      Tags:
+        - Key: Name
+          Value: !Ref NameTag
+      VpcId: !Ref VpcId

@@ -21,3 +21,14 @@ Resources:
         CidrBlock: "10.0.0.0/24"      
         NameTag: "SubnetPublica" 
         VpcId: !GetAtt myVPC.Outputs.VPCid 
+  
+  myPrivateSubnet:
+    Type: "AWS::CloudFormation::Stack"
+    DependsOn: "myVPC"
+    Properties:
+      TimeoutInMinutes: 60
+      TemplateURL: "https://s3-eu-west-1.amazonaws.com/cloudformationtfm/subnet.yaml"
+      Parameters:
+        CidrBlock: "10.0.1.0/24"      
+        NameTag: "SubnetPrivada"
+        VpcId: !GetAtt myVPC.Outputs.VPCid 

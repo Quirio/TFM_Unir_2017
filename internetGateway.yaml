@@ -1,0 +1,23 @@
+Parameters:
+  VpcId:
+    Type: String
+  nameTag:
+    Type: String
+
+Resources:
+  intGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+      - Key: Name
+        Value: !Ref nameTag
+  attachIG:
+    DependsOn: intGateway
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref intGateway
+      VpcId: !Ref VpcId
+
+Outputs:
+  intGateway:
+    Value: !Ref intGateway 

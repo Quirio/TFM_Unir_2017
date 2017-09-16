@@ -1,0 +1,11 @@
+Parameters:
+  SubnetId:
+    Type: String
+  RouteTableId:
+    Type: String
+Resources:
+  Table_Association:
+    Type: "AWS::EC2::SubnetRouteTableAssociation"
+    Properties:
+      RouteTableId: !Ref RouteTableId
+      SubnetId: !Ref SubnetId

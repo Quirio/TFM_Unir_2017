@@ -22,6 +22,28 @@ Resources:
         NameTag: "SubnetPublica" 
         VpcId: !GetAtt myVPC.Outputs.VPCid 
   
+  myPublicRouteTable:
+    Type: "AWS::CloudFormation::Stack"
+    DependsOn: ["myVPC", "intGateway"]
+    Properties:
+      TimeoutInMinutes: 60
+      TemplateURL: "https://s3-eu-west-1.amazonaws.com/cloudformationtfm/routeTable.yaml"
+      Parameters:
+        VpcId: !GetAtt myVPC.Outputs.VPCid 
+        NameTag: "Public_Route_table"
+        DestinationCidrBlock: "0.0.0.0/0"
+        GatewayId: !GetAtt intGateway.Outputs.intGateway
+  
+  intGateway:
+    Type: "AWS::CloudFormation::Stack"
+    DependsOn: "myVPC"
+    Properties:   
+      TimeoutInMinutes: 60
+      TemplateURL: "https://s3-eu-west-1.amazonaws.com/cloudformationtfm/internetGateway.yaml"
+      Parameters:
+        VpcId: !GetAtt myVPC.Outputs.VPCid
+        nameTag: "InternetGateway"              
+     
   myPrivateSubnet:
     Type: "AWS::CloudFormation::Stack"
     DependsOn: "myVPC"

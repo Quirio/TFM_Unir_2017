@@ -1,0 +1,53 @@
+Parameters:
+    Instances:
+      Type: List<String>
+   LLoadBalancerPort:
+      Type: String
+      Default: "80"
+   LInstancePort:
+      Type: String
+      Default: "80"
+   LProtocol:
+      Type: String
+      Default: HTTP
+   HCTarget:
+      Type: String
+      Default: HTTP:80/
+   HCHealthyThreshold:
+      Type: String
+      Default: '3' 
+   HCUnhealthyThreshold:
+      Type: String
+      Default: '5'
+   HCInterval:
+      Type: String
+      Default: '30'
+   HCTimeout:       
+      Type: String
+      Default: '5'
+   CEnabled: 
+      Type: String
+      Default: "true"
+   CTimeout: 
+      Type: String
+      Default: '60'   
+
+ElasticLoadBalancer:
+  Type: AWS::ElasticLoadBalancing::LoadBalancer
+  Properties:
+    AvailabilityZones:
+      Fn::GetAZs: ''
+    Instances: !Ref Instances
+    Listeners:
+    - LoadBalancerPort: !Ref LLoadBalancerPort
+      InstancePort: !Ref LInstancePort  
+      Protocol: !Ref LProtocol
+    HealthCheck:
+      Target: !Ref HCTarget
+      HealthyThreshold: !Ref HCHealthyThreshold
+      UnhealthyThreshold: !Ref HCUnhealthyThreshold
+      Interval: !Ref HCInterval
+      Timeout: !Ref HCTimeout
+    ConnectionDrainingPolicy:
+      Enabled: !Ref CEnabled
+      Timeout: !Ref CTimeout

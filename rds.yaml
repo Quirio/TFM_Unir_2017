@@ -17,13 +17,11 @@ Resources:
   MyDB:
     Type: AWS::RDS::DBInstance
     Properties:
-      DBSecurityGroups:
-      - Ref: MyDbSecurityByEC2SecurityGroup
-      - Ref: MyDbSecurityByCIDRIPGroup
-      AllocatedStorage: '5'
-      DBInstanceClass: db.m1.small
-      Engine: MySQL
-      MasterUsername: MyName
-      MasterUserPassword: MyPassword
-      DeletionPolicy: Snapshot  
+      DBSecurityGroups: !Ref SecurityGroups
+      AllocatedStorage: !Ref AllocatedStorage
+      DBInstanceClass: !Ref DBInstanceClass
+      Engine: !Ref Engine
+      MasterUsername: !Ref MasterUsername
+      MasterUserPassword: !Ref MasterUserPassword 
+      DeletionPolicy: !Ref DeletionPolicy
   

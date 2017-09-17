@@ -14,8 +14,9 @@ Parameters:
   NameTag:
     Type: String
     Default: "Ec2-test"
-  SecurityGroups:
-    Type: List<String>
+  AvailabilityZone:
+    Type: String
+ 
 Resources:
   EC2:
     Type: "AWS::EC2::Instance"
@@ -23,10 +24,6 @@ Resources:
       ImageId: !Ref ImageId 
       KeyName: !Ref KeyName
       InstanceType: !Ref InstanceType
-      SecurityGroups: !Ref SecurityGroups 
-      NetworkInterfaces: 
-        - DeviceIndex: "0"
-          SubnetId: !Ref SubnetId 
       Tags: 
       - Key: Name
         Value: !Ref NameTag 

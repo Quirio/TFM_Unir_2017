@@ -111,7 +111,7 @@ Resources:
     DependsOn: ["myVPC"]
     Properties:
       TimeoutInMinutes: 60
-      TemplateURL: "https://s3-eu-west-1.amazonaws.com/cloudformationtfm/secutiryGroup.yaml"
+      TemplateURL: "https://s3-eu-west-1.amazonaws.com/cloudformationtfm/securityGroup.yaml"
       Parameters:
         Name: "PublicSecurityGroup"
         Description: "Allow 80 port traffic"
@@ -120,7 +120,7 @@ Resources:
  
   publicEC2:
     Type: "AWS::CloudFormation::Stack"
-    DependsOn: ["myPublicSubnet","publicSecurityGroup"]
+    DependsOn: ["myPublicSubnet","publicSecurityGroup","publicTableAssoc"]
     Properties:
       TimeoutInMinutes: 60
       TemplateURL: "https://s3-eu-west-1.amazonaws.com/cloudformationtfm/ec2.yaml"
@@ -128,6 +128,7 @@ Resources:
         ImageId: "ami-ebd02392"
         KeyName: "TFMkey"
         InstanceType: "t2.micro"   
-        SubnetId: !GetAtt myPublicSubnet.Outputs.SubnetId
         NameTag: "PublicEc2"
-        SecurityGroups: [!GetAtt publicSecurityGroup.Outputs.securityGroup]       
+        AvailabilityZone: myPublicSubnet.Outputs.AvailabilityZone
+        SubnetId: myPublicSubnet.Outputs.SubnetId 
+        

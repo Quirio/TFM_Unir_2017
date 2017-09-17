@@ -105,4 +105,29 @@ Resources:
         NameTag: "Private_Route_table"
         DestinationCidrBlock: "0.0.0.0/0"
         NatGatewayId: !GetAtt natGateway.Outputs.NatGateway
-
+  
+  publicSecurityGroup: 
+    Type: "AWS::CloudFormation::Stack"
+    DependsOn: ["myVPC"]
+    Properties:
+      TimeoutInMinutes: 60
+      TemplateURL: "https://s3-eu-west-1.amazonaws.com/cloudformationtfm/secutiryGroup.yaml"
+      Parameters:
+        Name: "PublicSecurityGroup"
+        Description: "Allow 80 port traffic"
+        NameTag: "PublicSecurityGroup"
+        VpcId: !GetAtt myVPC.Outputs.VPCid 
+ 
+  publicEC2:
+    Type: "AWS::CloudFormation::Stack"
+    DependsOn: ["myPublicSubnet","publicSecurityGroup"]
+    Properties:
+      TimeoutInMinutes: 60
+      TemplateURL: "https://s3-eu-west-1.amazonaws.com/cloudformationtfm/ec2.yaml"
+      Parameters:
+        ImageId: "ami-ebd02392"
+        KeyName: "TFMkey"
+        InstanceType: "t2.micro"   
+        SubnetId: !GetAtt myPublicSubnet.Outputs.SubnetId
+        NameTag: "PublicEc2"
+        SecurityGroups: [!GetAtt publicSecurityGroup.Outputs.securityGroup]       

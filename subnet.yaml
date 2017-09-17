@@ -17,3 +17,5 @@ Resources:
 Outputs:
   SubnetId:
     Value: !Ref Subnet 
+  AvailabilityZone:
+    Value: !GetAtt Subnet.AvailabilityZone 

@@ -1,0 +1,32 @@
+Parameters:
+  Name:
+    Type: String 
+  Description:
+    Type: String
+  NameTag:
+    Type: String
+  VpcId:
+    Type: String
+Resources:
+  securityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties: 
+      GroupName: !Ref Name
+      GroupDescription: !Ref Description
+      SecurityGroupEgress:
+      - IpProtocol: tcp
+        FromPort: '80'
+        ToPort: '80'
+        CidrIp: 0.0.0.0/0
+      SecurityGroupIngress: 
+      - IpProtocol: tcp
+        FromPort: '80'
+        ToPort: '80'
+        CidrIp: 0.0.0.0/0
+      Tags:
+      - Key: Name
+        Value: !Ref NameTag
+      VpcId: !Ref VpcId
+Outputs:
+  securityGroup:
+    Value: !Ref securityGroup

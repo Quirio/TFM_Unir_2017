@@ -1,0 +1,36 @@
+Parameters:
+  ImageId: 
+    Type: String
+    Default: "ami-ebd02392"
+  KeyName:
+    Type: String
+    Default: "TFMkey"
+  InstanceType:
+    Type: String
+    Default: "t2.micro"
+  SubnetId:
+    Type: String
+    Default: "subnet-9b7318d2"
+  NameTag:
+    Type: String
+    Default: "Ec2-test"
+  SecurityGroups:
+    Type: List<String>
+Resources:
+  EC2:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: !Ref ImageId 
+      KeyName: !Ref KeyName
+      InstanceType: !Ref InstanceType
+      SecurityGroups: !Ref SecurityGroups 
+      NetworkInterfaces: 
+        - DeviceIndex: "0"
+          SubnetId: !Ref SubnetId 
+      Tags: 
+      - Key: Name
+        Value: !Ref NameTag 
+
+Outputs:
+  Ec2Id:
+    Value: !Ref EC2 

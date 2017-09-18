@@ -1,0 +1,20 @@
+Parameters:
+  CidrIp: 
+    Type: String
+  FromPort: 
+    Type: Integer
+  IpProtocol:
+    Type: String
+  ToPort: 
+    Type: Integer
+  SourceSecurityGroupId:
+    Type: String
+
+Resources:
+  Type: "AWS::EC2::SecurityGroupEgress"
+  Properties: 
+    CidrIp: !Ref CidrIp
+    FromPort: !Ref FromPort
+    IpProtocol: !Ref IpProtocol
+    ToPort: !Ref ToPort
+    SourceSecurityGroupId: !Ref SourceSecurityGroupId

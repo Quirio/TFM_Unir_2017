@@ -16,6 +16,8 @@ Parameters:
     Default: "Ec2-test"
   AvailabilityZone:
     Type: String
+  SecurityGroupIds:
+    Type: String
  
 Resources:
   EC2:
@@ -24,6 +26,8 @@ Resources:
       ImageId: !Ref ImageId 
       KeyName: !Ref KeyName
       InstanceType: !Ref InstanceType
+      SecurityGroupIds:
+      - Ref: SecurityGroup 
       Tags: 
       - Key: Name
         Value: !Ref NameTag 

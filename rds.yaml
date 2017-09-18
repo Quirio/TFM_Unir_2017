@@ -24,4 +24,6 @@ Resources:
       MasterUsername: !Ref MasterUsername
       MasterUserPassword: !Ref MasterUserPassword 
       DeletionPolicy: !Ref DeletionPolicy
-  
+Outputs:
+  RDSId:
+    Value: !Ref MyDB 
